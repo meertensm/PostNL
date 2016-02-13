@@ -48,16 +48,16 @@ try{
 
     // Add as many parcels as you want
     $postnl->addParcel([
-        'Height' => 100, // Centimeter
-        'Length' => 100, // Centimeter
-        'Width' => 100, // Centimeter
+        'Height' => 100, // Millimeter
+        'Length' => 100, // Millimeter
+        'Width' => 100, // Millimeter
         'Weight' => 1000, // Gram
     ]);
     
     $postnl->addParcel([
-        'Height' => 100, // Centimeter
-        'Length' => 100, // Centimeter
-        'Width' => 100, // Centimeter
+        'Height' => 100, // Millimeter
+        'Length' => 100, // Millimeter
+        'Width' => 100, // Millimeter
         'Weight' => 1000, // Gram
     ]);
 
