@@ -1,0 +1,22 @@
+{
+    "name": "mcs/postnl",
+    "description": "Library to interact with the PostNL web services",
+    "license": "MIT",
+    "keywords": ["postnl", "postnl webservice", "postnl api", "postnl soap"],
+    "authors": [
+        {
+            "name": "Michiel Meertens",
+            "email": "meertensmichiel28@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 5.4",
+        "ext-soap": "*"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "MCS\\": "src"
+        }
+    }
+}
