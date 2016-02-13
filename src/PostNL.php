@@ -24,6 +24,8 @@ class PostNL
     protected $wsdl_base = null;
 
     protected $parcels = [];
+    
+    protected $soapOptions = [];
 
     protected $orderEnvelope = [
         'Customer' => [],
