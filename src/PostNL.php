@@ -1,12 +1,11 @@
 <?php 
-
 namespace MCS;
 
-use Exception;
-use Soapclient;
-use SoapFault;
-use SOAPHeader;
 use SoapVar;
+use Exception;
+use SoapFault;
+use Soapclient;
+use SOAPHeader;
 
 class PostNL
 {
@@ -20,13 +19,9 @@ class PostNL
     const HEADER_SECURITY_NAMESPACE = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
 
     protected $printer = 'GraphicFile|PDF';
-
     protected $wsdl_base = null;
-
     protected $parcels = [];
-    
     protected $soapOptions = [];
-
     protected $orderEnvelope = [
         'Customer' => [],
         'Shipment' => [
@@ -65,6 +60,7 @@ class PostNL
 
     public function __construct(array $credentials)
     {
+        
         $required = [
             'sandbox',
             'customer_number',
@@ -76,8 +72,8 @@ class PostNL
             'globalpack'
         ];
 
-        foreach($required as $param){
-            if(!isset($credentials[$param])){
+        foreach ($required as $param) {
+            if (!isset($credentials[$param])) {
                 throw new Exception($param . ' not set!');    
             }
         }
@@ -121,8 +117,8 @@ class PostNL
             'Remark'
         ];
 
-        foreach($array as $key => $value){
-            if(in_array($key, $param)){
+        foreach ($array as $key => $value) {
+            if (in_array($key, $param)) {
                 $this->orderEnvelope['Customer']['Address'][$key] = $value;
             }
         }
@@ -169,10 +165,10 @@ class PostNL
             'TelNr'
         ];
 
-        foreach($array as $key => $value){
-            if(in_array($key, $param)){
+        foreach ($array as $key => $value) {
+            if (in_array($key, $param)) {
                 $this->orderEnvelope['Shipment']['Addresses']['Address'][$key] = $value;
-            }else if(in_array($key, $contact)){
+            } else if (in_array($key, $contact)) {
                 $this->orderEnvelope['Shipment']['Contacts']['Contact'][$key] = $value;
             }
         }
@@ -187,13 +183,13 @@ class PostNL
         $counter = 1;
         $parcels = [];
 
-        foreach($this->parcels as $parcel){
+        foreach ($this->parcels as $parcel) {
 
             $barcode = $this->barcode($this->orderEnvelope['Shipment']['Addresses']['Address']['Countrycode']);
 
-            if (count($this->parcels) > 1){
+            if (count($this->parcels) > 1) {
 
-                if (!isset($mc_barcode)){
+                if (!isset($mc_barcode)) {
                     $mc_barcode = $barcode;   
                 }
 
@@ -211,13 +207,14 @@ class PostNL
             $this->orderEnvelope['Shipment']['Dimension'] = $parcel;
             $this->orderEnvelope['Shipment']['Barcode'] = $barcode;
 
-            if($this->orderEnvelope['Shipment']['Addresses']['Address']['Countrycode'] == 'NL'){
+            if ($this->orderEnvelope['Shipment']['Addresses']['Address']['Countrycode'] == 'NL') {
                 $trackingLink = self::TRACK_AND_TRACE_NL_BASE_URL 
                     . $barcode 
-                    . 'NL' 
+                    . '/'
+                    . 'NL'
+                    . '/'
                     . urlencode($this->orderEnvelope['Shipment']['Addresses']['Address']['Zipcode']);
-            }
-            else{
+            } else {
                 $trackingLink = self::TRACK_AND_TRACE_INT_BASE_URL 
                     . $barcode 
                     . '/'
@@ -241,6 +238,7 @@ class PostNL
      */
     public function addParcel(array $parcel)
     {
+        
         $parameters = [
             'Height',
             'Length',
@@ -249,11 +247,10 @@ class PostNL
         ];
 
         $newParcel = [];
-        foreach($parameters as $parameter){
-            if(!isset($parcel[$parameter])){
+        foreach ($parameters as $parameter) {
+            if (!isset($parcel[$parameter])) {
                 throw new Exception($parameter . ' not set!');    
-            }
-            else{
+            } else {
                 $newParcel[$parameter] = (int)$parcel[$parameter];        
             }
         }
@@ -317,7 +314,8 @@ class PostNL
     /**
      * Call the postnl webservice
      */
-    private function call_PostNL($endpoint, $function, $data){
+    private function call_PostNL($endpoint, $function, $data)
+    {
 
         try{
 
@@ -338,12 +336,11 @@ class PostNL
 
             return $client->$function($data);
 
-        }
-        catch(SoapFault $SoapFault){
+        } catch(SoapFault $SoapFault) {
             $msg = $SoapFault->detail->CifException->Errors->ExceptionData->ErrorMsg;
-            if (!is_string($msg)){
+            if (!is_string($msg)) {
                 $msg = '';
-                foreach ($SoapFault->detail->CifException->Errors->ExceptionData as $exception){
+                foreach ($SoapFault->detail->CifException->Errors->ExceptionData as $exception) {
                     $msg .= $exception->ErrorMsg . PHP_EOL;   
                 }
             }

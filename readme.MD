@@ -1,5 +1,5 @@
 # PostNL Webservice
-[![Latest Stable Version](https://poser.pugx.org/mcs/postnl/v/stable)](https://packagist.org/packages/mcs/postnl) [![Total Downloads](https://poser.pugx.org/mcs/postnl/downloads)](https://packagist.org/packages/mcs/postnl) [![Latest Unstable Version](https://poser.pugx.org/mcs/postnl/v/unstable)](https://packagist.org/packages/mcs/postnl) [![License](https://poser.pugx.org/mcs/postnl/license)](https://packagist.org/packages/mcs/postnl)
+[![Latest Stable Version](https://poser.pugx.org/mcs/postnl/v/stable)](https://packagist.org/packages/mcs/postnl) [![Latest Unstable Version](https://poser.pugx.org/mcs/postnl/v/unstable)](https://packagist.org/packages/mcs/postnl) [![License](https://poser.pugx.org/mcs/postnl/license)](https://packagist.org/packages/mcs/postnl)
 
 Installation:
 ```bash
